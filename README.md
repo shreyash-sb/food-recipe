@@ -1,3 +1,5 @@
+### NOW UNDER DEVELOPMENT STAGE
+
 # 🍽️ Food Recipe App
 
 A modern, responsive **Recipe Search Web Application** built using React.
