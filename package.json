@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Modern, responsive recipe discovery and culinary studio web application built with React, Tailwind CSS, and Forkify API.",
   "author": "Shreyash Bobalade",
-  "license": "MIT",
   "homepage": ".",
   "keywords": [
     "recipe",

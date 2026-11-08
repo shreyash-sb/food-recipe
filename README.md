@@ -64,7 +64,6 @@ food-app/
 │   ├── index.css              # Tailwind styling
 │   ├── index.js               # Application bootstrap
 │   └── setupTests.js          # Testing setup
-├── LICENSE                    # MIT License
 ├── package.json               # Dependencies & scripts
 └── tailwind.config.js         # Theme styling configuration
 ```
@@ -114,6 +113,3 @@ All tests pass cleanly.
 
 **Shreyash Bobalade**
 - GitHub: [@shreyash-sb](https://github.com/shreyash-sb)
-
-## 📄 License
-This project is open-source under the [MIT License](LICENSE).
