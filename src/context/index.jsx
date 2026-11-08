@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
+import { searchRecipes } from "../services/api";
 
 export const GlobalContext = createContext(null);
 
@@ -23,7 +24,11 @@ export default function GlobalState({ children }) {
       if (savedTheme !== null) {
         return savedTheme === "dark";
       }
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+      return (
+        typeof window !== "undefined" &&
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      );
     } catch {
       return false;
     }
@@ -75,7 +80,10 @@ export default function GlobalState({ children }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem("food_app_shopping_list", JSON.stringify(shoppingList));
+      localStorage.setItem(
+        "food_app_shopping_list",
+        JSON.stringify(shoppingList)
+      );
     } catch (e) {
       console.error(e);
     }
@@ -93,7 +101,10 @@ export default function GlobalState({ children }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem("food_app_recent_searches", JSON.stringify(recentSearches));
+      localStorage.setItem(
+        "food_app_recent_searches",
+        JSON.stringify(recentSearches)
+      );
     } catch (e) {
       console.error(e);
     }
@@ -113,23 +124,15 @@ export default function GlobalState({ children }) {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  // 6. Fetch Recipes Helper
+  // 6. Fetch Recipes Helper using centralized API service
   const fetchRecipes = useCallback(
     async (query) => {
       if (!query || !query.trim()) return;
       setLoading(true);
 
       try {
-        const res = await fetch(
-          `https://forkify-api.herokuapp.com/api/v2/recipes?search=${query.trim()}`
-        );
-        const data = await res.json();
-
-        if (data?.data?.recipes) {
-          setRecipeList(data.data.recipes);
-        } else {
-          setRecipeList([]);
-        }
+        const recipes = await searchRecipes(query.trim());
+        setRecipeList(recipes);
 
         // Add to recent searches if successful
         setRecentSearches((prev) => {
@@ -141,6 +144,7 @@ export default function GlobalState({ children }) {
       } catch (err) {
         console.error("API Error:", err);
         showToast("Failed to fetch recipes. Please check your connection.", "error");
+        setRecipeList([]);
       } finally {
         setLoading(false);
       }
@@ -148,7 +152,7 @@ export default function GlobalState({ children }) {
     [showToast]
   );
 
-  // Initial trending load on startup so the home page is never empty
+  // Initial trending load on startup so the home page is populated
   useEffect(() => {
     fetchRecipes("pizza");
   }, [fetchRecipes]);
@@ -197,7 +201,7 @@ export default function GlobalState({ children }) {
     } else {
       copy.splice(index, 1);
       setFavoritesList(copy);
-      showToast(`Removed from Favorites`, "info");
+      showToast("Removed from Favorites", "info");
     }
   }
 
@@ -219,7 +223,10 @@ export default function GlobalState({ children }) {
     }));
 
     setShoppingList((prev) => [...prev, ...newItems]);
-    showToast(`Added ${ingredients.length} ingredients to Shopping List! 🛒`, "success");
+    showToast(
+      `Added ${ingredients.length} ingredients to Shopping List! 🛒`,
+      "success"
+    );
     setIsShoppingOpen(true);
   }
 

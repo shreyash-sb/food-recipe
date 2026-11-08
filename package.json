@@ -1,6 +1,20 @@
 {
-  "name": "recipe-app",
-  "version": "0.1.0",
+  "name": "flavorcraft-recipe-app",
+  "version": "1.0.0",
+  "description": "Modern, responsive recipe discovery and culinary studio web application built with React, Tailwind CSS, and Forkify API.",
+  "author": "Shreyash Bobalade",
+  "license": "MIT",
+  "homepage": ".",
+  "keywords": [
+    "recipe",
+    "food-app",
+    "cooking",
+    "culinary",
+    "react",
+    "tailwindcss",
+    "kitchen-timer",
+    "shopping-list"
+  ],
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -11,13 +25,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.19.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll=false",
+    "test:watch": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

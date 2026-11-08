@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import CookingTimer from "../../components/cooking-timer";
 import RecipeItem from "../../components/recipe-item";
+import { getRecipeDetails } from "../../services/api";
 import {
   Heart,
   Clock,
@@ -44,18 +45,14 @@ export default function Details() {
 
   // Fetch recipe details
   useEffect(() => {
-    async function getRecipeDetails() {
+    async function loadRecipeDetails() {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(
-          `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
-        );
-        const data = await response.json();
-
-        if (data?.data?.recipe) {
-          setRecipeDetailsData(data.data);
-          const initialServings = data.data.recipe.servings || 4;
+        const recipeData = await getRecipeDetails(id);
+        if (recipeData) {
+          setRecipeDetailsData({ recipe: recipeData });
+          const initialServings = recipeData.servings || 4;
           setBaseServings(initialServings);
           setServings(initialServings);
           setCheckedIngredients({});
@@ -64,14 +61,13 @@ export default function Details() {
         }
       } catch (err) {
         console.error(err);
-        setError("Failed to load recipe details.");
+        setError("Failed to load recipe details. Please check your connection.");
       } finally {
         setLoading(false);
       }
     }
 
-    getRecipeDetails();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    loadRecipeDetails();
   }, [id, setRecipeDetailsData]);
 
   const recipe = recipeDetailsData?.recipe;

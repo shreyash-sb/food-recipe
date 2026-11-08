@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "FlavorCraft",
+  "name": "FlavorCraft Recipe Studio",
+  "description": "Discover, cook, and scale 1,000,000+ delicious gourmet recipes with smart shopping lists and cooking timers.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +19,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#f97316",
+  "background_color": "#0B0F19"
 }
