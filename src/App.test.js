@@ -4,9 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import GlobalState from "./context";
 
-// Mock canvas-confetti
-jest.mock("canvas-confetti", () => jest.fn());
-
 // Mock window.scrollTo
 beforeAll(() => {
   window.scrollTo = jest.fn();

@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import confetti from "canvas-confetti";
 import { searchRecipes } from "../services/api";
 
 export const GlobalContext = createContext(null);
@@ -186,18 +185,6 @@ export default function GlobalState({ children }) {
       copy.push(item);
       setFavoritesList(copy);
       showToast(`Added "${item.title}" to Favorites! ❤️`, "favorite");
-
-      // Celebrate with confetti micro-interaction
-      try {
-        confetti({
-          particleCount: 45,
-          spread: 60,
-          origin: { y: 0.8 },
-          colors: ["#f97316", "#fb923c", "#fdba74", "#10b981", "#f43f5e"],
-        });
-      } catch (e) {
-        console.log(e);
-      }
     } else {
       copy.splice(index, 1);
       setFavoritesList(copy);
